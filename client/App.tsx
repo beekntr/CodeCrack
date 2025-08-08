@@ -54,6 +54,15 @@ const App = () => (
                 }
               />
               <Route path="/auth" element={<Auth />} />
+              <Route
+                path="/forgot-password"
+                element={
+                  <PlaceholderPage
+                    title="Forgot Password"
+                    description="Reset your password to regain access to your account."
+                  />
+                }
+              />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
