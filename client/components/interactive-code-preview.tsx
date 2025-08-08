@@ -1,33 +1,33 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Code, Zap } from 'lucide-react';
-import { Button } from './ui/button';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Play, Code, Zap } from "lucide-react";
+import { Button } from "./ui/button";
 
 const codeSnippets = [
   {
-    language: 'Python',
+    language: "Python",
     code: `def fibonacci(n):
     if n <= 1:
         return n
     return fibonacci(n-1) + fibonacci(n-2)
 
 print(fibonacci(10))`,
-    output: '55',
-    icon: '🐍'
+    output: "55",
+    icon: "🐍",
   },
   {
-    language: 'JavaScript',
+    language: "JavaScript",
     code: `function isPalindrome(str) {
     const cleaned = str.toLowerCase().replace(/[^a-z]/g, '');
     return cleaned === cleaned.split('').reverse().join('');
 }
 
 console.log(isPalindrome("A man a plan a canal Panama"));`,
-    output: 'true',
-    icon: '⚡'
+    output: "true",
+    icon: "⚡",
   },
   {
-    language: 'Java',
+    language: "Java",
     code: `public class QuickSort {
     public static void quickSort(int[] arr, int low, int high) {
         if (low < high) {
@@ -37,9 +37,9 @@ console.log(isPalindrome("A man a plan a canal Panama"));`,
         }
     }
 }`,
-    output: 'Array sorted!',
-    icon: '☕'
-  }
+    output: "Array sorted!",
+    icon: "☕",
+  },
 ];
 
 export function InteractiveCodePreview() {
@@ -109,7 +109,7 @@ export function InteractiveCodePreview() {
             ) : (
               <Play className="h-4 w-4 mr-2" />
             )}
-            {isRunning ? 'Running...' : 'Run'}
+            {isRunning ? "Running..." : "Run"}
           </Button>
         </div>
 
@@ -131,13 +131,15 @@ export function InteractiveCodePreview() {
             <div className="bg-slate-950/50 rounded-lg p-3 border border-slate-700/30">
               <div className="flex items-center space-x-2 mb-2">
                 <Code className="h-4 w-4 text-green-400" />
-                <span className="text-green-400 text-xs font-medium">Output</span>
+                <span className="text-green-400 text-xs font-medium">
+                  Output
+                </span>
               </div>
               <AnimatePresence>
                 {showOutput && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
+                    animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
                   >
@@ -167,8 +169,8 @@ export function InteractiveCodePreview() {
               }}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
                 index === currentSnippet
-                  ? 'bg-primary scale-125'
-                  : 'bg-slate-600 hover:bg-slate-500'
+                  ? "bg-primary scale-125"
+                  : "bg-slate-600 hover:bg-slate-500"
               }`}
             />
           ))}

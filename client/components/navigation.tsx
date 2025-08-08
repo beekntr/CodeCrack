@@ -45,9 +45,7 @@ export function Navigation() {
                 key={item.name}
                 to={item.href}
                 className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isActive(item.href)
-                    ? "text-primary"
-                    : "text-muted-foreground"
+                  isActive(item.href) ? "text-primary" : "text-muted-foreground"
                 }`}
               >
                 {item.name}
@@ -102,12 +100,18 @@ export function Navigation() {
                   <div className="pt-4 border-t">
                     <div className="flex flex-col space-y-2">
                       <Button variant="ghost" asChild>
-                        <Link to="/auth?mode=signin" onClick={() => setIsOpen(false)}>
+                        <Link
+                          to="/auth?mode=signin"
+                          onClick={() => setIsOpen(false)}
+                        >
                           Sign In
                         </Link>
                       </Button>
                       <Button asChild>
-                        <Link to="/auth?mode=signup" onClick={() => setIsOpen(false)}>
+                        <Link
+                          to="/auth?mode=signup"
+                          onClick={() => setIsOpen(false)}
+                        >
                           Sign Up
                         </Link>
                       </Button>

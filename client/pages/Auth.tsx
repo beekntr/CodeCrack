@@ -5,7 +5,13 @@ import { Mail, Lock, User, Github, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 export default function Auth() {
@@ -17,7 +23,7 @@ export default function Auth() {
     email: "",
     password: "",
     name: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
   useEffect(() => {
@@ -33,9 +39,9 @@ export default function Auth() {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -58,17 +64,16 @@ export default function Auth() {
               {isSignUp ? "Create Account" : "Welcome Back"}
             </CardTitle>
             <CardDescription>
-              {isSignUp 
+              {isSignUp
                 ? "Join thousands of developers and start your coding journey"
-                : "Sign in to your account to continue coding"
-              }
+                : "Sign in to your account to continue coding"}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Google Auth Button */}
-            <Button 
-              variant="outline" 
-              className="w-full" 
+            <Button
+              variant="outline"
+              className="w-full"
               onClick={handleGoogleAuth}
               type="button"
             >
@@ -182,7 +187,9 @@ export default function Auth() {
             {/* Toggle between signin/signup */}
             <div className="text-center text-sm">
               <span className="text-muted-foreground">
-                {isSignUp ? "Already have an account?" : "Don't have an account?"}
+                {isSignUp
+                  ? "Already have an account?"
+                  : "Don't have an account?"}
               </span>{" "}
               <Link
                 to={`/auth?mode=${isSignUp ? "signin" : "signup"}`}

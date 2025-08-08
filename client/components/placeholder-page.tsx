@@ -18,7 +18,8 @@ export function PlaceholderPage({ title, description }: PlaceholderPageProps) {
           <p className="text-muted-foreground">{description}</p>
         </div>
         <p className="text-sm text-muted-foreground">
-          Continue the conversation to build out this page with full functionality.
+          Continue the conversation to build out this page with full
+          functionality.
         </p>
         <Button variant="outline" onClick={() => window.history.back()}>
           Go Back

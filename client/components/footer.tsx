@@ -10,7 +10,7 @@ export function Footer() {
         { name: "Dashboard", href: "/dashboard" },
         { name: "Leaderboard", href: "/leaderboard" },
         { name: "Contests", href: "/contests" },
-      ]
+      ],
     },
     {
       title: "Resources",
@@ -19,7 +19,7 @@ export function Footer() {
         { name: "Tutorials", href: "/tutorials" },
         { name: "Blog", href: "/blog" },
         { name: "Community", href: "/community" },
-      ]
+      ],
     },
     {
       title: "Company",
@@ -28,7 +28,7 @@ export function Footer() {
         { name: "Careers", href: "/careers" },
         { name: "Contact", href: "/contact" },
         { name: "Privacy", href: "/privacy" },
-      ]
+      ],
     },
     {
       title: "Support",
@@ -37,14 +37,18 @@ export function Footer() {
         { name: "API Docs", href: "/api" },
         { name: "Status", href: "/status" },
         { name: "Terms", href: "/terms" },
-      ]
-    }
+      ],
+    },
   ];
 
   const socialLinks = [
     { icon: Github, href: "https://github.com/codecrack", label: "GitHub" },
     { icon: Twitter, href: "https://twitter.com/codecrack", label: "Twitter" },
-    { icon: Linkedin, href: "https://linkedin.com/company/codecrack", label: "LinkedIn" },
+    {
+      icon: Linkedin,
+      href: "https://linkedin.com/company/codecrack",
+      label: "LinkedIn",
+    },
     { icon: Mail, href: "mailto:hello@codecrack.dev", label: "Email" },
   ];
 
@@ -58,11 +62,13 @@ export function Footer() {
               <div className="p-2 bg-primary rounded-lg">
                 <Code className="h-6 w-6 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold text-foreground">CodeCrack</span>
+              <span className="text-xl font-bold text-foreground">
+                CodeCrack
+              </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-sm">
-              Master coding through interactive challenges. Join thousands of developers 
-              improving their skills and landing dream jobs.
+              Master coding through interactive challenges. Join thousands of
+              developers improving their skills and landing dream jobs.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
@@ -108,7 +114,8 @@ export function Footer() {
             © {new Date().getFullYear()} CodeCrack. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground mt-4 md:mt-0 flex items-center">
-            Made with <Heart className="h-4 w-4 mx-1 text-red-500" /> for developers
+            Made with <Heart className="h-4 w-4 mx-1 text-red-500" /> for
+            developers
           </p>
         </div>
       </div>
