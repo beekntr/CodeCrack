@@ -53,15 +53,7 @@ const App = () => (
                   />
                 }
               />
-              <Route
-                path="/auth"
-                element={
-                  <PlaceholderPage
-                    title="Authentication"
-                    description="Sign in or create an account to start coding."
-                  />
-                }
-              />
+              <Route path="/auth" element={<Auth />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
