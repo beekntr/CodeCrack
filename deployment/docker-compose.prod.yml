@@ -14,7 +14,7 @@ services:
       - mongodb_data:/data/db
       - ./mongodb-init:/docker-entrypoint-initdb.d
     ports:
-      - "27017:27017"
+      - "27018:27017"  # Changed to avoid conflict with existing MongoDB
     networks:
       - codecrack_network
 
@@ -27,7 +27,7 @@ services:
     volumes:
       - redis_data:/data
     ports:
-      - "6379:6379"
+      - "6380:6379"  # Changed to avoid conflict with existing Redis
     networks:
       - codecrack_network
 

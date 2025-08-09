@@ -8,7 +8,7 @@
       "exec_mode": "cluster",
       "env": {
         "NODE_ENV": "production",
-        "PORT": 3000
+        "PORT": 3002
       },
       "env_file": "/var/www/codecrack/.env.production",
       "log_file": "/var/log/codecrack/combined.log",

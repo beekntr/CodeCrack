@@ -7,6 +7,21 @@ set -e
 
 echo "🚀 Starting CodeCrack production deployment..."
 
+# Check for existing services on ports we want to use
+echo "🔍 Checking for port conflicts..."
+if netstat -tulpn | grep :3002 > /dev/null 2>&1; then
+    echo "⚠️  Warning: Port 3002 is already in use!"
+    echo "   Please stop the service using port 3002 or modify the configuration."
+fi
+
+if netstat -tulpn | grep :27018 > /dev/null 2>&1; then
+    echo "⚠️  Warning: Port 27018 is already in use!"
+fi
+
+if netstat -tulpn | grep :6380 > /dev/null 2>&1; then
+    echo "⚠️  Warning: Port 6380 is already in use!"
+fi
+
 # Configuration
 DEPLOY_USER="codecrack"
 APP_DIR="/var/www/codecrack"
