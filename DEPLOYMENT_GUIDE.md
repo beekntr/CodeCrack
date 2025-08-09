@@ -5,7 +5,7 @@ Complete step-by-step guide to deploy CodeCrack to Ubuntu server with CI/CD pipe
 ## 📋 Prerequisites
 
 - Ubuntu 20.04+ server with sudo access
-- Domain name pointing to your server (api.orbittrails.com)
+- Domain name pointing to your server (codecrack.kshitijsinghbhati.in)
 - GitHub repository access
 - SSH key pair for GitHub Actions
 
@@ -53,7 +53,7 @@ openssl rand -base64 24  # For passwords
 ### Step 3: Update Google OAuth credentials
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create new OAuth 2.0 credentials
-3. Add authorized redirect URI: `https://api.orbittrails.com/api/auth/google/callback`
+3. Add authorized redirect URI: `https://codecrack.kshitijsinghbhati.in/api/auth/google/callback`
 4. Update `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env.production`
 
 ### Step 4: Restart application
@@ -66,7 +66,7 @@ pm2 reload codecrack-api
 
 ### Automatic setup (if not done during deployment)
 ```bash
-sudo certbot --nginx -d api.orbittrails.com
+sudo certbot --nginx -d codecrack.kshitijsinghbhati.in
 ```
 
 ### Manual verification
@@ -152,14 +152,14 @@ echo "0 2 * * * /var/backups/codecrack/backup.sh" | sudo crontab -
 ### Health checks
 ```bash
 # Test health endpoint
-curl https://api.orbittrails.com/health
+curl https://codecrack.kshitijsinghbhati.in/health
 
 # Test API endpoint
-curl https://api.orbittrails.com/api/health
+curl https://codecrack.kshitijsinghbhati.in/api/health
 ```
 
 ### Application testing
-1. Visit https://orbittrails.com (if frontend is deployed)
+1. Visit https://codecrack.kshitijsinghbhati.in
 2. Test user registration/login
 3. Test problem solving functionality
 4. Test leaderboard functionality
@@ -220,7 +220,7 @@ If you want to serve the frontend from the same server:
 cd /var/www/codecrack
 
 # Build frontend for production
-VITE_API_BASE_URL=https://api.orbittrails.com npm run build:client
+VITE_API_BASE_URL=https://codecrack.kshitijsinghbhati.in npm run build:client
 
 # Copy to web directory
 sudo mkdir -p /var/www/codecrack/frontend
@@ -229,13 +229,12 @@ sudo chown -R www-data:www-data /var/www/codecrack/frontend
 ```
 
 ### Configure domain for frontend
-Update your DNS to point `orbittrails.com` to your server and update Nginx configuration.
+Update your DNS to point `codecrack.kshitijsinghbhati.in` to your server and the configuration is already set.
 
 ## 🎉 Deployment Complete!
 
 Your CodeCrack application should now be running at:
-- **API**: https://api.orbittrails.com
-- **Frontend**: https://orbittrails.com (if deployed)
+- **Frontend & API**: https://codecrack.kshitijsinghbhati.in
 
 ### Next steps:
 1. Set up monitoring (consider using services like Datadog, New Relic, or simple uptime monitors)

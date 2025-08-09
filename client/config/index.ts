@@ -1,8 +1,9 @@
 // Production configuration for frontend
 export const config = {
-  API_BASE_URL: process.env.NODE_ENV === 'production' 
-    ? 'https://api.orbittrails.com' 
-    : 'http://localhost:8080',
+  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || 
+    (process.env.NODE_ENV === 'production' 
+      ? 'https://codecrack.kshitijsinghbhati.in' 
+      : 'http://localhost:8080'),
   
   APP_NAME: 'CodeCrack',
   VERSION: '1.0.0',

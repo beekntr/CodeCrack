@@ -143,7 +143,7 @@ jobs:
     - name: Health Check
       run: |
         sleep 30
-        curl -f https://api.orbittrails.com/health || exit 1
+        curl -f https://codecrack.kshitijsinghbhati.in/health || exit 1
 
     - name: Notify deployment status
       if: always()

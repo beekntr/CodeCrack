@@ -97,10 +97,10 @@ sudo nginx -t
 sudo systemctl reload nginx
 
 # Setup SSL with Let's Encrypt (if not already done)
-if [ ! -f "/etc/letsencrypt/live/api.orbittrails.com/fullchain.pem" ]; then
+if [ ! -f "/etc/letsencrypt/live/codecrack.kshitijsinghbhati.in/fullchain.pem" ]; then
     echo "🔒 Setting up SSL certificate..."
     sudo apt install -y certbot python3-certbot-nginx
-    sudo certbot --nginx -d api.orbittrails.com
+    sudo certbot --nginx -d codecrack.kshitijsinghbhati.in
 fi
 
 # Setup log rotation
@@ -148,7 +148,7 @@ echo "📋 Next steps:"
 echo "1. Edit environment file: $APP_DIR/.env.production"
 echo "2. Configure your secrets (MongoDB URI, JWT secret, Google OAuth, etc.)"
 echo "3. Restart the application: pm2 reload codecrack-api"
-echo "4. Test the deployment: curl https://api.orbittrails.com/health"
+echo "4. Test the deployment: curl https://codecrack.kshitijsinghbhati.in/health"
 echo ""
 echo "📊 Monitor your application:"
 echo "- PM2 status: pm2 status"
