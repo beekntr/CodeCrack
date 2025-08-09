@@ -1,0 +1,58 @@
+# Docker Compose for CodeCrack execution environments
+version: '3.8'
+
+services:
+  # Build and tag custom images for code execution
+  python-executor:
+    build:
+      context: .
+      dockerfile: python.Dockerfile
+    image: codecrack/python-executor:latest
+    command: ["echo", "Python executor image built"]
+    
+  cpp-executor:
+    build:
+      context: .
+      dockerfile: cpp.Dockerfile
+    image: codecrack/cpp-executor:latest
+    command: ["echo", "C++ executor image built"]
+    
+  javascript-executor:
+    build:
+      context: .
+      dockerfile: javascript.Dockerfile
+    image: codecrack/javascript-executor:latest
+    command: ["echo", "JavaScript executor image built"]
+    
+  java-executor:
+    build:
+      context: .
+      dockerfile: java.Dockerfile
+    image: codecrack/java-executor:latest
+    command: ["echo", "Java executor image built"]
+
+  # Redis for BullMQ
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    restart: unless-stopped
+
+  # MongoDB
+  mongodb:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: codecrack
+      MONGO_INITDB_ROOT_PASSWORD: your_secure_password
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+  mongodb_data:
