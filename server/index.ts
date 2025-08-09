@@ -72,6 +72,16 @@ export function createServer() {
   app.use(express.urlencoded({ extended: true, limit: '1mb' }));
   app.use(validateInput);
 
+  // Health check (for load balancer)
+  app.get("/health", (_req, res) => {
+    res.json({ 
+      status: 'healthy', 
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      environment: process.env.NODE_ENV 
+    });
+  });
+
   // Health check
   app.get("/api/health", (_req, res) => {
     res.json({ 

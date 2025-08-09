@@ -1,0 +1,155 @@
+name: Deploy CodeCrack to Production
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  NODE_VERSION: '18.x'
+  PRODUCTION_HOST: '122.162.241.146'
+  DEPLOY_PATH: '/var/www/codecrack'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: npm test
+
+    - name: TypeScript check
+      run: npm run typecheck
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build application
+      run: npm run build
+
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: |
+          dist/
+          package.json
+          package-lock.json
+          deployment/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: dist
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Add server to known hosts
+      run: |
+        ssh-keyscan -H ${{ env.PRODUCTION_HOST }} >> ~/.ssh/known_hosts
+
+    - name: Deploy to server
+      run: |
+        # Create deployment package
+        tar -czf codecrack-deploy.tar.gz dist/ package.json package-lock.json deployment/
+        
+        # Upload to server
+        scp codecrack-deploy.tar.gz ${{ secrets.SSH_USERNAME }}@${{ env.PRODUCTION_HOST }}:/tmp/
+        
+        # Execute deployment script on server
+        ssh ${{ secrets.SSH_USERNAME }}@${{ env.PRODUCTION_HOST }} << 'EOF'
+          set -e
+          
+          # Create backup
+          if [ -d "${{ env.DEPLOY_PATH }}" ]; then
+            sudo cp -r ${{ env.DEPLOY_PATH }} ${{ env.DEPLOY_PATH }}_backup_$(date +%Y%m%d_%H%M%S)
+          fi
+          
+          # Extract new deployment
+          cd /tmp
+          tar -xzf codecrack-deploy.tar.gz
+          
+          # Ensure directory exists
+          sudo mkdir -p ${{ env.DEPLOY_PATH }}
+          sudo chown $USER:$USER ${{ env.DEPLOY_PATH }}
+          
+          # Copy files
+          cp -r dist/ ${{ env.DEPLOY_PATH }}/
+          cp package.json package-lock.json ${{ env.DEPLOY_PATH }}/
+          cp -r deployment/ ${{ env.DEPLOY_PATH }}/
+          
+          # Install production dependencies
+          cd ${{ env.DEPLOY_PATH }}
+          npm ci --only=production
+          
+          # Copy environment file
+          if [ ! -f .env.production ]; then
+            cp deployment/.env.production .env.production
+            echo "⚠️  Please configure .env.production file with your secrets"
+          fi
+          
+          # Update Docker containers
+          cd deployment
+          docker-compose -f docker-compose.prod.yml pull
+          docker-compose -f docker-compose.prod.yml up -d
+          
+          # Restart PM2 application
+          pm2 reload ecosystem.config.json --update-env
+          pm2 save
+          
+          # Clean up
+          rm -f /tmp/codecrack-deploy.tar.gz
+          rm -rf /tmp/dist /tmp/package.json /tmp/package-lock.json /tmp/deployment
+          
+          echo "✅ Deployment completed successfully!"
+        EOF
+
+    - name: Health Check
+      run: |
+        sleep 30
+        curl -f https://api.orbittrails.com/health || exit 1
+
+    - name: Notify deployment status
+      if: always()
+      run: |
+        if [ "${{ job.status }}" == "success" ]; then
+          echo "✅ Deployment successful!"
+        else
+          echo "❌ Deployment failed!"
+        fi

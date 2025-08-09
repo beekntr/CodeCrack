@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import config from '@/config';
 
 interface User {
   _id: string;
