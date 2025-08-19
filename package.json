@@ -16,17 +16,13 @@
     "build:client": "vite build --mode production",
     "build:server": "vite build --config vite.config.server.ts",
     "start": "node dist/server/node-build.mjs",
-    "start:prod": "NODE_ENV=production node dist/server/node-build.mjs",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
     "typecheck": "tsc",
     "init-db": "tsx server/scripts/init-db.ts",
     "build:docker": "cd docker && docker-compose build",
     "start:services": "cd docker && docker-compose up -d mongodb redis",
-    "stop:services": "cd docker && docker-compose down",
-    "deploy:prod": "npm run build && npm run start:prod",
-    "docker:prod": "cd deployment && docker-compose -f docker-compose.prod.yml up -d",
-    "docker:prod:down": "cd deployment && docker-compose -f docker-compose.prod.yml down"
+    "stop:services": "cd docker && docker-compose down"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
